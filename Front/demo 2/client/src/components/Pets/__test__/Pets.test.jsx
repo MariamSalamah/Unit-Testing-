@@ -37,5 +37,38 @@ describe("Test Pets Component", () => {
   });
 
 
+  test("Test Favorite Filter when it's favorite", async ()=>{
+    render(<Pets />);
+    let catCards = await screen.findAllByRole("article");
+    fireEvent.change(screen.getByLabelText(/favourite/i), {
+      target: { value: "favoured" },
+    });
+    expect(screen.getAllByRole("article").length).toBe(2);
+    expect(screen.getAllByRole("article")).toStrictEqual(
+      [
+        catCards[0],
+        catCards[1]
+      ]
+    )
+
+  });
   
+    test("Test Favorite Filter when it's not favorite", async ()=>{
+    render(<Pets />);
+    let catCards = await screen.findAllByRole("article");
+    fireEvent.change(screen.getByLabelText(/favourite/i), {
+      target: { value: "not favoured" },
+    });
+    expect(screen.getAllByRole("article").length).toBe(3);
+    expect(screen.getAllByRole("article")).toStrictEqual(
+      [
+        catCards[2],
+        catCards[3],
+        catCards[4]
+      ]
+    )
+
+  });
+
+
 });
